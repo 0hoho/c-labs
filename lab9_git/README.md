@@ -121,3 +121,25 @@
 `git lol` показывает слияние (ромб из двух линий), затем отправил `main` на GitHub (`git push`).
 
 ![граф и push](screenshots/screenshot-27.png)
+
+### Ветки и fast-forward
+
+Перешёл на main, создал пустой greeting.txt и закоммитил. Потом записал в него hello и тоже закоммитил. Создал ветку feature/uppercase и перешёл в неё.
+
+![greeting.txt](screenshots/screenshot-23.png)
+
+В feature/uppercase заменил текст на HELLO и закоммитил. В `git lol` ветка feature/uppercase на один коммит впереди main.
+
+![HELLO](screenshots/screenshot-24.png)
+
+Вернулся на main, там по-прежнему hello. `git diff main feature/uppercase` показывает замену hello на HELLO. Слил ветку, получился fast-forward: пока я работал в feature/uppercase, в main новых коммитов не было, поэтому Git просто сдвинул main вперёд без нового коммита. В файле теперь HELLO. Ветку feature/uppercase удалил.
+
+![fast-forward](screenshots/screenshot-25.png)
+
+Слил mybranch в main. Тут fast-forward не получился, потому что ветки разошлись, и Git сделал коммит слияния. Конфликтов нет: в ветках менялись разные файлы.
+
+![merge mybranch](screenshots/screenshot-26.png)
+
+В `git lol` виден коммит слияния. После этого запушил main.
+
+![граф и push](screenshots/screenshot-27.png)
