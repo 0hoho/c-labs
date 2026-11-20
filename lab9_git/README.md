@@ -1,14 +1,12 @@
 # Практическое задание 9. Git
 
-Все действия выполнены в папке `lab9_git` репозитория `c-labs`. Основная ветка называется `main` (в тексте задания она `master`).
+## Настройка
 
-## Начальная настройка
-
-Задал имя и почту, редактор `nvim`, основную ветку `main` и алиас `lol` (сокращение для `git log --oneline --graph --all`).
+Указал имя, почту, редактор nvim и ветку main по умолчанию. Ещё добавил алиас `lol` для `git log --oneline --graph --all`.
 
 ![git config](screenshots/screenshot-1.png)
 
-Создал репозиторий `c-labs` на GitHub, склонировал его, создал папку `lab9_git` с `README.md`, закоммитил и отправил на GitHub (`git push -u origin main`).
+Создал репозиторий c-labs на GitHub и склонировал его. В нём сделал папку lab9_git и README.md, закоммитил и запушил.
 
 ![создание репозитория](screenshots/screenshot-2,1.png)
 
@@ -16,89 +14,89 @@
 
 ## Оценка 3
 
-### Файл sort.c
+### sort.c
 
-`git status` показывает, что я на ветке `main` и изменений нет. В `git log` один коммит `Add README`.
+Посмотрел, на какой я ветке, и сделал `git log`. Пока там один коммит.
 
 ![git status](screenshots/screenshot-3.png)
 
 ![git log](screenshots/screenshot-4.png)
 
-Создал `sort.c` с функцией сортировки пузырьком. Новый файл Git пока не отслеживает (untracked), в индексе ничего нет.
+Создал sort.c с функцией сортировки пузырьком. Git его пока не видит: файл untracked.
 
 ![untracked](screenshots/screenshot-5.png)
 
-После `git add sort.c` файл попал в индекс: секция «Changes to be committed», новый файл.
+Добавил файл в индекс командой `git add`, теперь он в списке на коммит.
 
-![staged](screenshots/screenshot-7.png)
+![после add](screenshots/screenshot-7.png)
 
-После `git commit` рабочий каталог чистый, но ветка опережает `origin/main` на 1 коммит: коммит есть только локально.
+Сделал коммит. Изменений нет, но ветка опережает origin/main на 1 коммит, потому что я ещё не сделал push.
 
-![commit](screenshots/screenshot-6.png)
+![после commit](screenshots/screenshot-6.png)
 
-Дописал комментарий: файл `modified`, но не в индексе. После `git add` он попал в индекс.
+Дописал в sort.c комментарий. Файл modified, но в индексе его нет. После `git add` он попал в индекс.
 
-![modified и staged](screenshots/screenshot-8.png)
+![комментарий и add](screenshots/screenshot-8.png)
 
-Дописал второй комментарий и сделал коммит без `git add`. В коммит вошёл только первый комментарий (он лежал в индексе), а второй остался изменением в рабочем каталоге, поэтому `git status` снова показывает `modified`. Коммит берёт содержимое индекса, а не рабочего каталога. Затем `git add`, `git commit` и `git push`.
+Дописал второй комментарий и сделал коммит без `git add`. В коммит попал только первый комментарий, потому что коммит берёт то, что лежит в индексе. Второй остался в файле как несохранённое изменение, поэтому в status файл снова modified. Потом добавил его, закоммитил и сделал push.
 
 ![коммит без add](screenshots/screenshot-9.png)
 
 ### Ветки
 
-Создал ветку `mybranch`, `git branch` показывает обе ветки (текущая отмечена `*`). Переключался между ветками: `git status` в первой строке показывает текущую ветку. У `mybranch` нет строки про `origin`, потому что на GitHub этой ветки ещё нет.
+Создал ветку mybranch, посмотрел список веток, перешёл на неё и обратно на main. `git status` пишет, на какой я ветке. В mybranch нет строки про origin, потому что на GitHub её ещё нет.
 
 ![ветки](screenshots/screenshot-10.png)
 
-В `mybranch` создал `file1.txt` со своим именем и закоммитил. `git log --oneline --graph` показывает, что `mybranch` указывает на новый коммит `Add file1.txt`.
+В mybranch создал file1.txt со своим именем и закоммитил. В `git log --oneline --graph` mybranch стоит на новом коммите.
 
 ![file1](screenshots/screenshot-11.png)
 
-Вернулся на `main`: коммита с `file1.txt` здесь нет. Создал `file2.txt` и закоммитил. `git lol` показывает развилку: у `main` и `mybranch` теперь разные коммиты.
+Перешёл на main. Коммита с file1.txt тут нет. Создал file2.txt и закоммитил. По `git lol` видно, что ветки разошлись: у каждой свои коммиты.
 
 ![file2 и развилка](screenshots/screenshot-12.png)
 
-В `mybranch` файла `file2.txt` нет, потому что он есть только в истории `main`. `git diff mybranch main` показывает: `file1.txt` в `main` отсутствует, `file2.txt` добавлен.
+В mybranch нет file2.txt, он остался в main. `git diff mybranch main` показывает, что file1.txt в main нет, а file2.txt есть.
 
 ![ls и diff](screenshots/screenshot-13.png)
 
-Добавил отчёт в `mybranch`, закоммитил и отправил ветку (`git push -u origin mybranch`), затем отправил изменения `main`.
+Закоммитил отчёт в mybranch и запушил ветку (`git push -u origin mybranch`). Потом запушил main.
 
 ![push](screenshots/screenshot-14.png)
 
-На GitHub две ветки: `main` и `mybranch`.
+На GitHub появились обе ветки.
 
 ![ветки на GitHub](screenshots/screenshot-15.png)
 
 ## Оценка 4
 
-### sort.c: diff и restore (ветка mybranch)
+### sort.c: diff и restore
 
-В `mybranch` переписал `sort.c`: добавил `main()` с массивом `{4, 2, 0}` и вызовом сортировки. Программа печатает `0 2 4`.
+Переключился на mybranch и переписал sort.c: добавил main() с массивом {4, 2, 0} и вызовом сортировки. Программа выводит 0 2 4.
 
 ![sort.c с main](screenshots/screenshot-16.png)
 
-`git diff` показывает все изменения (рабочий каталог против индекса), а `git diff --staged` пуст: в индексе ничего нет. После `git add sort.c` наоборот: `git diff` пуст, а `git diff --staged` показывает все изменения (индекс против последнего коммита).
+`git diff` показывает все изменения, а `git diff --staged` пустой: в индексе пока ничего нет. После `git add sort.c` наоборот: `git diff` пустой, а `git diff --staged` показывает изменения.
 
 ![diff](screenshots/screenshot-17.png)
 
-Убрал число `0` из массива (`{4, 2}`). Теперь `git diff` показывает только это удаление, а `git diff --staged` показывает прежнюю версию с `{4, 2, 0}`. Происходит следующее: у файла одновременно три версии (в последнем коммите, в индексе и в рабочем каталоге), и `diff` сравнивает разные пары. Поэтому `sort.c` в `git status` присутствует дважды: как «Changes to be committed» и как «Changes not staged for commit».
+Убрал из массива 0. Теперь `git diff` показывает только это удаление, а `git diff --staged` показывает версию из индекса (с нулём). Дело в том, что `git diff` сравнивает рабочую папку с индексом, а `git diff --staged` индекс с последним коммитом, поэтому они показывают разное. В `git status` sort.c теперь два раза: в «Changes to be committed» и в «Changes not staged for commit».
 
 ![diff после удаления](screenshots/screenshot-18.png)
 
-`git restore --staged sort.c` убрал файл из индекса (содержимое файла не изменилось), поэтому в `git status` он остался только в «not staged». Затем `git add` и `git commit`, `git lol` показывает новый коммит в `mybranch`.
+`git restore --staged sort.c` убрал файл из индекса, сам файл не изменился. В status он теперь только в «not staged». Потом добавил и закоммитил, в `git lol` виден новый коммит в mybranch.
 
 ![restore --staged](screenshots/screenshot-19.png)
 
-Добавил в `main()` строку `printf("hello git\n");`: `cat sort.c` её показывает, `git status` — `modified`. `git restore sort.c` отбросил это изменение безвозвратно.
+Добавил в main() строку `printf("hello git\n");`. В sort.c она появилась, status показывает modified. `git restore sort.c` отменил это изменение.
 
 ![printf и restore](screenshots/screenshot-20.png)
 
-После `restore` строки с `printf` в `sort.c` нет, `git status`: нечего коммитить.
+После restore строки printf в файле нет, в status нечего коммитить.
 
 ![после restore](screenshots/screenshot-21.png)
 
-Отправил ветку `mybranch` на GitHub с обновлённым отчётом.
+Запушил mybranch с обновлённым отчётом.
 
 ![push mybranch](screenshots/screenshot-22.png)
 
