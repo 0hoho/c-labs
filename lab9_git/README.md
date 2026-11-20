@@ -101,3 +101,25 @@
 Отправил ветку `mybranch` на GitHub с обновлённым отчётом.
 
 ![push mybranch](screenshots/screenshot-22.png)
+
+### Ветки и fast-forward merge (ветка main)
+
+На `main` создал пустой `greeting.txt` и закоммитил (`Add file greeting.txt`), затем записал в него `hello` и закоммитил (`Add content to greeting.txt`). Создал ветку `feature/uppercase` и переключился на неё. `git status` показывает ветку `feature/uppercase` и отсутствие изменений.
+
+![greeting.txt](screenshots/screenshot-23.png)
+
+В `feature/uppercase` заменил содержимое на `HELLO` и закоммитил. `git branch` показывает три ветки, а `git lol`: `feature/uppercase` на один коммит впереди `main`.
+
+![HELLO](screenshots/screenshot-24.png)
+
+Вернулся на `main`: в `greeting.txt` всё ещё `hello`. `git diff main feature/uppercase` показывает замену `hello` на `HELLO`. `git merge feature/uppercase` прошёл как fast-forward: у `main` не появилось новых коммитов, поэтому Git просто сдвинул указатель ветки вперёд и не создал нового коммита. Теперь в файле `HELLO`. Ветку `feature/uppercase` удалил (`git branch -d`).
+
+![fast-forward](screenshots/screenshot-25.png)
+
+Смержил `mybranch` в `main` (`git merge mybranch`). Это не fast-forward: ветки разошлись, поэтому Git создал коммит слияния `Merge branch 'mybranch'` с двумя родителями. Конфликтов нет, потому что в ветках менялись разные файлы.
+
+![merge mybranch](screenshots/screenshot-26.png)
+
+`git lol` показывает слияние (ромб из двух линий), затем отправил `main` на GitHub (`git push`).
+
+![граф и push](screenshots/screenshot-27.png)
